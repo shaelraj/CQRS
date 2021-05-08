@@ -12,6 +12,7 @@
         <module>user-core</module>
         <module>user-cmd</module>
         <module>user-query</module>
+		<module>user-oauth2.0</module>
     </modules>
 
 

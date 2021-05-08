@@ -14,6 +14,11 @@ public class UserLookupResponse {
 
     private String message;
 
+    public UserLookupResponse(List<User> user) {
+        this.users = new ArrayList<>();
+        this.users.addAll(user);
+    }
+
     public UserLookupResponse(User user) {
         this.users = new ArrayList<>();
         this.users.add(user);

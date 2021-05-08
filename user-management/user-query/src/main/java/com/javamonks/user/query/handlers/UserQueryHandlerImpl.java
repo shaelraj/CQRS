@@ -1,16 +1,19 @@
 package com.javamonks.user.query.handlers;
 
-import com.springbank.user.core.models.User;
-import com.springbank.user.query.api.dto.UserLookupResponse;
-import com.springbank.user.query.api.queries.FindAllUsersQuery;
-import com.springbank.user.query.api.queries.FindUserByIdQuery;
-import com.springbank.user.query.api.queries.SearchUsersQuery;
-import com.springbank.user.query.api.repositories.UserRepository;
+
+import com.javamonks.models.User;
+import com.javamonks.user.query.dto.UserLookupResponse;
+import com.javamonks.user.query.queries.FindAllUsersQuery;
+import com.javamonks.user.query.queries.FindUserByIdQuery;
+import com.javamonks.user.query.queries.SearchUsersQuery;
+import com.javamonks.user.query.repositories.UserRepository;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,21 +28,30 @@ public class UserQueryHandlerImpl implements UserQueryHandler {
     @QueryHandler
     @Override
     public UserLookupResponse getUserById(FindUserByIdQuery query) {
-        var user = userRepository.findById(query.getId());
-        return user.isPresent() ? new UserLookupResponse(user.get()) : null;
+        Optional<User> user = userRepository.findById(query.getId());
+        List<User> users = new ArrayList<>();
+        if(user.isPresent()){
+            users.add(user.get());
+        }
+
+        return  new UserLookupResponse(users);
     }
 
     @QueryHandler
     @Override
     public UserLookupResponse searchUsers(SearchUsersQuery query) {
-        var users = new ArrayList<>(userRepository.findByFilterRegex(query.getFilter()));
+        Optional<User> user = userRepository.findByFilterRegex(query.getFilter());
+        List<User> users = new ArrayList<>();
+        if(user.isPresent()){
+            users.add(user.get());
+        }
         return new UserLookupResponse(users);
     }
 
     @QueryHandler
     @Override
     public UserLookupResponse getAllUsers(FindAllUsersQuery query) {
-        var users = new ArrayList<>(userRepository.findAll());
+        List<User> users = new ArrayList<>(userRepository.findAll());
         return new UserLookupResponse(users);
     }
 }
