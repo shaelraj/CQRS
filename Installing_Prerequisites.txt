@@ -95,5 +95,20 @@ docker run -it -d --name adminer \
  -e ADMINER_DEFAULT_SERVER=mysql-container \
 --restart always adminer:latest
 
+#10 JSON user object
+
+{
+	"user":{
+		"firstname": "Bipin",
+		"lastname": "Kumar",
+		"emailAddress": "shael.dhn88@gmail.com",
+		"account" :{
+			"username" : "shaelraj",
+			"password" : "password",
+			"roles" :[ "READ_PRIVILEGE", "WRITE_PRIVILEGE"]
+		}
+	}
+}
+
 
 
